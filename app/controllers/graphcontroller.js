@@ -3,8 +3,6 @@
 
 app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStorageService', '$location', 'log', function ($scope, $http, authService, localStorageService, $location, log) {
 
-
-    debugger;
     $scope.authentication = authService.authentication.isAuth;
     $scope.userid = authService.authentication.userId;
     $scope.sensorId = authService.authentication.sensorId;
@@ -22,11 +20,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     $scope.sid = authData.sid;
 
     $scope.rememberme = authData.remember;
-
-   
-
-
-
 
     $scope.furl = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/graphtoday';
 
@@ -60,13 +53,48 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     $scope.myculture = function (culture) {
 
 
-        var topdate = new Date()
-        
-        
+        if (culture == 'it') {
 
-        $scope.topdate = topdate.toString("MMM dd yyyy")
 
-       
+            $scope.culturedateformat = "DD MMM YYYY h:mm a";
+            var currentdate = moment(new Date()).format("DD MMM YYYY h:mm a");
+            var newarray = currentdate.split(" "); 
+
+
+            if (newarray[1] == "Feb") {
+                newarray[1] = "Февраль";
+            }
+            if (newarray[1] == "Mar") {
+                newarray[1] = "Март";
+            }
+
+            if (newarray[1] == "May") {
+                newarray[1] = "май";
+            }
+
+            if (newarray[1] == "Jun") {
+                newarray[1] = "Июнь";
+            }
+
+            if (newarray[4] == "am") {
+                newarray[4] = "я";
+            }
+
+            if (newarray[4] == "pm") {
+                newarray[4] = "вечера";
+            }
+            var toConvertedString = newarray[0] + " " + newarray[1] + " " + newarray[2] + " " + newarray[3] + " " + newarray[4];
+            $("#CurrentDate").html("<b>" + toConvertedString + "</b>");
+
+        }
+
+        else {
+
+
+            $("#CurrentDate").html("<b>" + moment(new Date()).format("DD MMM YYYY h:mm a") + "</b>");
+
+        }
+
 
     }
   
@@ -282,13 +310,8 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                     fontWeight: 'bold'
                 }
             });
-
-
-            var currentusage = (data.power) * 100
-            document.getElementById("currentusage").innerHTML = currentusage.toFixed(2);
-
-
-
+            var currentusage = (data.power) * 1
+            document.getElementById("currentusage").innerHTML = currentusage.toFixed(4) + ' ';
 
 
             //$(function () {
@@ -541,8 +564,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
             $(".flag9").show()
         }
 
-       
-
     }
 
 
@@ -550,14 +571,10 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
 
         $http.get($scope.todayurl, null, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + $scope.AuthToken } }).success(function (data) {
 
-            var todayvalue = (data.power) * 100
-            document.getElementById("today").innerHTML = todayvalue.toFixed(2);
-
-
+            var todayvalue = (data.power.power) * 1
+            document.getElementById("today").innerHTML = todayvalue.toFixed(4) + ' ';
 
         }).error(function (xhr, error, errorStatus, responseText) {
-
-
 
         });
     };
@@ -568,8 +585,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
 
             var todayavgvalue = (data.power) * 100
             document.getElementById("todayavg").innerHTML = todayavgvalue.toFixed(3);
-
-            debugger;
 
             $scope.todayvalue = todayavgvalue;
 
@@ -818,7 +833,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                     $scope.datetoshowlabel = Highcharts.dateFormat($scope.seriesformat, $scope.datetoshow)
                     break;
                 case "6month":
-                    debugger;
+                 
                     $scope.graphstep = 1;
                     var predate = $scope.previousdate;
                     var pd = new Date(predate);

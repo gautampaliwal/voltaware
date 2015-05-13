@@ -33,7 +33,6 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
         $("#CurrentDate").html("<b>" + moment(new Date()).format("MMM DD YYYY,h:mm:ss a") + "</b>");
     }
 
-     
 
         $.ajax({
             url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/alert',
@@ -47,8 +46,6 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
             contentType: "application/json; charset=utf-8",
             success: function (response, status) {
 
-                debugger;
-
                 var data = response.length == 0 ? null : response[response.length - 1];
 
                 if (data != null) {
@@ -59,10 +56,6 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
                     $scope.$apply();
                 }
 
-        
-
-       
-                
 
             },
             error: function (err) {

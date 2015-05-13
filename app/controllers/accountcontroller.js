@@ -51,7 +51,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
         contentType: "application/json; charset=utf-8",
         success: function (response, status) {
 
-            debugger;
             $scope.account.firstname = response.firstName;
             $scope.account.lastname = response.lastName;
             $scope.account.title = response.title;
@@ -65,8 +64,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
             log.error("Error::" + err.statusText);
-
-            debugger;
 
 
         }
@@ -84,20 +81,17 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
         },
         success: function (json) {
 
-
-
-            debugger;
-
        
                var data = json.length == 0 ? null : json[json.length - 1];
          
-
+               $scope.account.accountnumber = data.sensor.serialNumber;
         
                 if (data != null) {
                     $scope.account.numberofadults = data.numberAdults;
                     $scope.account.numberofchildren = data.numberChildren;
                     $scope.account.numberofrooms = data.numberBedrooms;
                     $scope.account.propertytypeid = data.id;
+                    $scope.account.accountnumber = data.sensor.serialNumber
                     $scope.$apply();
                 }
 
@@ -119,6 +113,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
                     $scope.account.region = data.address.region;
                     $scope.account.country = data.address.country;
                     $scope.account.post = data.address.postcode;
+             
                     
                     $scope.$apply();
                 }
@@ -139,10 +134,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
         },
         error: function (xhr, status) {
 
-
-         
-
-            debugger;
             log.error(xhr)
 
 
@@ -166,12 +157,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
             contentType: "application/json; charset=utf-8",
             success: function (response, status) {
 
-
-
-
-
-            
-                
 
             },
             error: function (xhr) {
@@ -224,8 +209,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
        error: function (err) {
 
       
-           debugger;
-
 
            log.error("Error::" + err.statusText);
 
@@ -268,10 +251,6 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
            },
            error: function (err) {
-
-
-               debugger;
-
 
                log.error("Error::" + err.statusText);
 

@@ -15,7 +15,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
     $scope.login = function () {
 
         authService.login($scope.loginData).then(function (response) {
-            debugger;
+        
             startTimer();
             $location.path('/graph');
 
@@ -28,7 +28,6 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
         },
          function (xhr) {
 
-             debugger;
              if (xhr.status == "401" || xhr.status == "400")
              {
                  $scope.loginData.userName = "";
@@ -132,8 +131,6 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
         });
     }
-
-    debugger;
 
     setTimeout(function () {
         $("#loginusername").val($.cookie('loginusername'));
