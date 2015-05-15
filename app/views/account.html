@@ -3,13 +3,12 @@
 
 <form name="Account" id="Account" class="form-horizontal" role="form">
 
-
     <div class="row">
         <div class="col-md-6 col-xs-6">
             <div class="form-group">
                 <label class="control-label col-md-3">{{ 'accountnumber' | translate }}</label>
                 <div class="col-md-4">
-                    <input data-ng-model="account.accountnumber" class="form-control" type="text" />
+                    <input data-ng-disabled="true" data-ng-model="account.accountnumber" class="form-control" type="text" />
                 </div>
             </div>
         </div>

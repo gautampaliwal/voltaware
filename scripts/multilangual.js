@@ -102,7 +102,7 @@ app.config(function ($translateProvider) {
         offpeak: 'Off Peak',
         saver: 'Saver',
         monitorhistory: 'Monitor history',
-        usedsofartoday: 'used so far today',
+        usedsofartoday: 'used since Midnight',
         changeyourpassword: 'Change your password',
         usebelowform: 'Please use the form below to change your password',
         update: 'Update',
@@ -117,7 +117,8 @@ app.config(function ($translateProvider) {
         other:'Other'
     })
 
-        //Russian Translation
+
+     //Russian Translation
     .translations('it', {
         Logintext: 'Логин',
         Signuptext: 'Подписаться',
