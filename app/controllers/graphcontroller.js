@@ -6,19 +6,13 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     $scope.authentication = authService.authentication.isAuth;
     $scope.userid = authService.authentication.userId;
     $scope.sensorId = authService.authentication.sensorId;
-    $scope.accesstoken = authService.authentication.accesstoken
-
+    $scope.accesstoken = authService.authentication.accesstoken;
     $scope.isauth = $scope.authentication;
-
     $scope.acctoken = $scope.accesstoken;
-
-
     var authData = localStorageService.get('authorizationData');
     $scope.AuthToken = authData.token;
-
     $scope.uid = authData.uid;
     $scope.sid = authData.sid;
-
     $scope.rememberme = authData.remember;
 
     $scope.furl = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/graphtoday';
@@ -293,13 +287,14 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
             $(".loader").hide();
 
             $('.js-gauge--1').kumaGauge({
-                value: data.power * 100,
+                value: data.power * 1,
                 radius: iw / 2.5,
                 gaugeWidth: 40,
                 showNeedle: true,
+                min: 0,
+                max: 7,
                 paddingY: 0,
                 paddingX: 0,
-
                 label: {
                     display: true,
                     left: 'Min',
@@ -311,7 +306,9 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                 }
             });
             var currentusage = (data.power) * 1
-            document.getElementById("currentusage").innerHTML = currentusage.toFixed(4) + ' ';
+            var CU = parseFloat(currentusage);
+
+            document.getElementById("currentusage").innerHTML = CU.toFixed(2) + ' ';
 
 
             //$(function () {
@@ -526,9 +523,8 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     }
 
 
-    $scope.flagposition = function () {
-
-      
+    $scope.flagposition = function ()
+    { 
         if ($scope.percentage < -10 && $scope.percentage > -50) {
 
             $(".flag1").show()
@@ -539,8 +535,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
         else if ($scope.percentage > 10 && $scope.percentage < 50) {
             $(".flag3").show()
         }
-
-
         if ($scope.householdpercentage < -10 && $scope.householdpercentage > -50) {
 
             $(".flag4").show()
@@ -551,8 +545,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
         else if ($scope.householdpercentage > 10 && $scope.householdpercentage < 50) {
             $(".flag6").show()
         }
-
-
         if ($scope.basedonhistory < -10 && $scope.basedonhistory > -50) {
 
             $(".flag7").show()
@@ -563,7 +555,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
         else if ($scope.basedonhistory > 10 && $scope.basedonhistory < 50) {
             $(".flag9").show()
         }
-
     }
 
 
@@ -572,7 +563,10 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
         $http.get($scope.todayurl, null, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + $scope.AuthToken } }).success(function (data) {
 
             var todayvalue = (data.power.power) * 1
-            document.getElementById("today").innerHTML = todayvalue.toFixed(4) + ' ';
+
+                var TD = parseFloat(todayvalue);
+
+                document.getElementById("today").innerHTML = TD.toFixed(2) + ' ';
 
         }).error(function (xhr, error, errorStatus, responseText) {
 

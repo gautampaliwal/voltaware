@@ -73,7 +73,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
                     $scope.household.numberofadults = data.numberAdults;
                     $scope.household.numberofchildrens = data.numberChildren;
                     $scope.household.numberofbedrooms = data.numberBedrooms;
-                    $scope.household.tarrif = data.tariff.name;
+                    $scope.household.tarrif = data.tariff.displayName;
                     $scope.household.electricityprovider = data.tariff.electricityProviderXML.name;
 
 
@@ -272,20 +272,15 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
             contentType: "application/json; charset=utf-8",
             success: function (tarrif) {
 
-
-
                 $('#tarriflist').empty();
                 var i = 0;
                 $('#tarriflist').append($('<option>').text($scope.providertext).attr('value', ""));
                 for (i = 0; i < tarrif.listTariff.length; i++) {
-                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].name).attr('value', tarrif.listTariff[i].id));
+                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].displayName).attr('value', tarrif.listTariff[i].id));
                 }
             },
-            error: function (xhr, status) {
-
-
-
-
+            error: function (xhr, status)
+            {
 
             }
         });
@@ -309,16 +304,12 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
                 $('#tarriflist').empty();
                 var i = 0;
                 for (i = 0; i < tarrif.listTariff.length; i++) {
-                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].name).attr('value', tarrif.listTariff[i].id));
+                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].displayName).attr('value', tarrif.listTariff[i].id));
                     //  $scope.TariffData.push(data[i]);
                 }
 
                 //   $('#tarriflist option[value="' + $scope.household.tarrif + '"]').prop('selected', true);
-
-
                 //    $("#tarriflist option:contains(" + $scope.household.tarrif + ")").attr('selected', 'selected');
-
-
 
 
                 var text1 = $scope.household.tarrif;
@@ -416,13 +407,10 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
 
 
                             },
-                            error: function (err) {
-
-
-                                log.error("Error::" + err.statusText);
-
-
-                            }
+                            error: function (err)
+                            {
+                            log.error("Error::" + err.statusText);
+                             }
                         });
                     }
 
@@ -433,19 +421,14 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
                     //  $('#houseHold').find("input[type=text], select").val("");
 
                 },
-                error: function (err) {
+                error: function (err)
+                {
 
-
-
-                    log.error("Error::" + err);
-
+                 log.error("Error::" + err);
 
                 }
             })
         }
-
-
-
     }
 
 
@@ -459,7 +442,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
         $scope.getselectedtariff();
         $scope.$apply();
 
-    }, 3000);
+    }, 4000);
 
     $(".languagechanger").click(function () {
         $scope.getpropertyvalue()
@@ -474,10 +457,8 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
             $('#tarriflist option[value="' + $scope.Tariffvalue + '"]').prop('selected', true);
             $scope.$apply();
 
-        }, 2000);
-
+        }, 3000);
     });
-
     $scope.getpostcode();
     $scope.getpropertyvalue();
     $scope.getpropertytype();
