@@ -45,10 +45,12 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response, status) {
-
+                debugger;
                 var data = response.length == 0 ? null : response[response.length - 1];
 
                 if (data != null) {
+                    $scope.alert.ID = data.id;
+                    $scope.alert.hourMax = data.hourMax;
                     $scope.alert.highusagehr = data.hourAlert;
                     $scope.alert.highusageday = data.dayAlert;
                     $scope.alert.emailAlert = data.emailAlert;
@@ -75,17 +77,17 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
      
 
         $.ajax({
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/alert',
-            type: "POST",
+            url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/alert/' + $scope.alert.ID,
+            type: "PUT",
             accept: "application/json",
-            data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert" : $scope.alert.emailAlert }),
+            data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.emailAlert, "dayMax": 10.0, "hourMax": $scope.alert.hourMax }),
             headers: {
                 'Authorization': 'Bearer ' + $scope.AuthToken
             },
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response, status) {
-
+                debugger;
                 if ($scope.currentselectedlanguage == "it") {
 
                     log.info("Предупреждение успешно добавлен");

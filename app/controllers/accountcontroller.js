@@ -140,7 +140,12 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
         }
     });
 
-
+    $scope.CheckValidPostAndCity = function () {
+        if ($scope.account.post != undefined && $.trim($scope.account.post) != "" && $scope.account.town != undefined && $.trim($scope.account.town) != "") {
+            return true;
+        }
+        return false;
+    }
 
     $scope.updateprofile = function () {
 

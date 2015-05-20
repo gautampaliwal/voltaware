@@ -142,7 +142,15 @@
 
     <hr />
 
-    <a data-ng-click="updateprofile()" style="width: 100%;" class="btn btn-success"><i class="fa fa-check"></i> {{ 'save' | translate }}</a>
+    
+      <div data-ng-if="CheckValidPostAndCity()==true">
+        <a data-ng-click="updateprofile()" style="width:100%;" class="btn btn-success"><i class="fa fa-check"></i> {{ 'save' | translate }}</a>
+
+        </div>
+          <div data-ng-if="CheckValidPostAndCity()==false">
+        <button style="width:100%;" disabled="disabled" class="btn btn-success"><i class="fa fa-check"></i> {{ 'save' | translate }}</button>
+
+        </div>
 </form>
 <br />
 
