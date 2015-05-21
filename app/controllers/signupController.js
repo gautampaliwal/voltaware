@@ -26,11 +26,12 @@ app.controller('signupController', ['$scope', '$location', 'authService', 'ngAut
             $scope.message = "User has been registered successfully, you will be redicted to dashboard page in 3 seconds.";
         
             startTimer();
-            $location.path('/graph');
+         
 
             setTimeout(function () {
                 $(".loader").hide();
                 $(".submittext").show();
+                $location.path('/account');
             }, 2000);
 
         },
