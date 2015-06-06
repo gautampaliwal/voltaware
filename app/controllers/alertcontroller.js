@@ -19,7 +19,7 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
         computers: false,
         light: false,
         emailAlert: $scope.email
-     
+
     };
 
 
@@ -34,50 +34,50 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
     }
 
 
-        $.ajax({
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/alert',
-            type: "GET",
-            accept: "application/json",
-            headers: {
-                'Authorization': 'Bearer ' + $scope.AuthToken
-            },
-        
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (response, status) {
-                debugger;
-                var data = response.length == 0 ? null : response[response.length - 1];
+    $.ajax({
+        url: mainServicebase + 'user/' + $scope.uid + '/alert',
+        type: "GET",
+        accept: "application/json",
+        headers: {
+            'Authorization': 'Bearer ' + $scope.AuthToken
+        },
 
-                if (data != null) {
-                    $scope.alert.ID = data.id;
-                    $scope.alert.hourMax = data.hourMax;
-                    $scope.alert.highusagehr = data.hourAlert;
-                    $scope.alert.highusageday = data.dayAlert;
-                    $scope.alert.emailAlert = data.emailAlert;
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (response, status) {
+            debugger;
+            var data = response.length == 0 ? null : response[response.length - 1];
 
-                    $scope.$apply();
-                }
+            if (data != null) {
+                $scope.alert.ID = data.id;
+                $scope.alert.hourMax = data.hourMax;
+                $scope.alert.highusagehr = data.hourAlert;
+                $scope.alert.highusageday = data.dayAlert;
+                $scope.alert.emailAlert = data.emailAlert;
 
-
-            },
-            error: function (err) {
-
-          
-
-               
-
-
+                $scope.$apply();
             }
-        })
-  
 
 
-        $scope.savealert = function () {
+        },
+        error: function (err) {
 
-     
+
+
+
+
+
+        }
+    })
+
+
+
+    $scope.savealert = function () {
+
+
 
         $.ajax({
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/alert/' + $scope.alert.ID,
+            url: mainServicebase + 'user/' + $scope.uid + '/alert/' + $scope.alert.ID,
             type: "PUT",
             accept: "application/json",
             data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.emailAlert, "dayMax": 10.0, "hourMax": $scope.alert.hourMax }),
@@ -98,10 +98,6 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
                     log.info("Alert Added Successfully");
 
                 }
-            
-
-             
-            
 
             },
             error: function (err) {
@@ -109,19 +105,19 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
 
                 log.error("Error::" + err.statusText);
 
-            
+
 
 
             }
         })
 
-        }
+    }
 
 
-    
-    
 
-        
+
+
+
 
 
 }]);

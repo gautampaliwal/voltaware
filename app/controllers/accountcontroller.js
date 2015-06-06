@@ -39,7 +39,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
     $.ajax({
-        url: 'http://54.154.64.51:8080/voltaware/v1.0/me',
+        url: mainServicebase + 'me',
         type: "GET",
         accept: "application/json",
 
@@ -78,7 +78,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/property',
+        url: mainServicebase + 'user/' + $scope.uid + '/property',
         contentType: "application/json; charset=utf-8",
         headers: {
             'Authorization': 'Bearer ' + $scope.AuthToken
@@ -171,7 +171,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
         $.ajax({
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/users/' + $scope.uid,
+            url: mainServicebase + 'users/' + $scope.uid,
             type: "PUT",
             accept: "application/json",
             data: JSON.stringify({ "firstName": $scope.account.firstname, "lastName": $scope.account.lastname, "emailAddress": $scope.account.email, "title": $("#titlelist option:selected").text() }),
@@ -228,7 +228,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
             $.ajax({
-                url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/property',
+                url: mainServicebase + 'user/' + $scope.uid + '/property',
                 type: "POST",
                 accept: "application/json",
                 //data: JSON.stringify({ "numberBedrooms": $scope.account.numberofrooms, "numberAdults": $scope.account.numberofadults, "numberChildren": $scope.account.numberofchildren, "propertyType": { "id": $scope.account.propertytypeid, "name": $scope.account.propertytypename }, "address": { "houseNumber": $scope.account.housename, "addressLine1": $scope.account.address1, "addressLine2": $scope.account.address2, "postcode": $scope.account.post, "region": $scope.account.region, "city": $scope.account.town, "country": $scope.account.country }, "sensor": { "serialNumber": "ABBB12509" } }),
@@ -280,7 +280,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
             $.ajax({
-                url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/property/' + $scope.account.propertytypeid,
+                url: mainServicebase + 'user/' + $scope.uid + '/property/' + $scope.account.propertytypeid,
                 type: "PUT",
                 accept: "application/json",
                 //data: JSON.stringify({ "numberBedrooms": $scope.account.numberofrooms, "numberAdults": $scope.account.numberofadults, "numberChildren": $scope.account.numberofchildren, "address": { "houseNumber": $scope.account.housename, "addressLine1": $scope.account.address1, "addressLine2": $scope.account.address2, "postcode": $scope.account.post, "region": $scope.account.region, "city": $scope.account.town, "country": $scope.account.country }, "sensor": { "serialNumber": "ABBB12509" } }),

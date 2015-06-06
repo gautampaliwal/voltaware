@@ -48,9 +48,9 @@
             <div class="js-gauge js-gauge--1 gauge"></div>
 
             <!--<div style="width: 600px; height: 400px; margin: 0 auto">
-	       <div id="container-speed" style="width: 300px; height: 200px;"></div>
-	
-             </div>-->
+            <div id="container-speed" style="width: 300px; height: 200px;"></div>
+
+              </div>-->
         </div>
 
     </div>
@@ -78,11 +78,11 @@
     </div>
 
     <div class="col-md-9 col-xs-8">
-    
-                <div style="font-size: 12px; color: #9599F8; margin-top: -7px; margin-left: {{marginleft}}%">
-                    <span class="leftnow" style="font-size: 10px; margin-left: 9px; display: none;">{{ 'now' | translate }}</span> <i style="font-size: 20px; color: #777; margin-top: 5px; position: absolute" class="fa fa-arrows-v"></i><span class="rightnow" style="font-size: 10px; margin-left: 9px; display: none;">{{ 'now' | translate }}</span>
-                </div>
-      
+
+        <div style="font-size: 12px; color: #9599F8; margin-top: -7px; margin-left: {{marginleft}}%">
+            <span class="leftnow" style="font-size: 10px; margin-left: 9px; display: none;">{{ 'now' | translate }}</span> <i style="font-size: 20px; color: #777; margin-top: 5px; position: absolute" class="fa fa-arrows-v"></i><span class="rightnow" style="font-size: 10px; margin-left: 9px; display: none;">{{ 'now' | translate }}</span>
+        </div>
+
 
 
 
@@ -222,24 +222,14 @@
 
                         <div class="col-md-5 col-xs-7">
                             <div class="row">
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag7" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-4">
-                                     <div class="flag8" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag9" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
+                                <div class="col-md-12 col-xs-12">
+                                    <div style="margin-left:{{firstleft}}%">
+                                        <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
                                     </div>
                                 </div>
                             </div>
 
-                        
+
                         </div>
                     </div>
 
@@ -273,30 +263,19 @@
 
                         <div class="col-md-5 col-xs-7">
                             <div class="row">
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag1" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
+                                <div class="col-md-12 col-xs-12">
+                                    <div style="margin-left:{{secondleft}}%">
+                                        <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-xs-4">
-                                     <div class="flag2" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag3" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                            </div>
 
-                        
+                            </div>
                         </div>
                     </div>
                     <div class="row">
 
                         <div class="col-md-3 col-xs-4">
-                            <p> {{ 'other' | translate }}  {{bedcounter}} {{ 'bed' | translate }} {{propertytypename}} {{ 'inyourneighbour' | translate }}</p>
+                            <p> {{bedcounter}} {{ 'bed' | translate }} {{propertytypename}} in {{ countryname }}</p>
 
                         </div>
                         <div class="col-md-9 col-xs-8">
@@ -316,53 +295,8 @@
 
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-5 col-xs-5">&nbsp;</div>
-
-                        <div class="col-md-5 col-xs-7">
-                            <div class="row">
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag4" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-4">
-                                     <div class="flag5" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-4">
-                                    <div class="flag6" style="text-align:center; display:none">
-                                            <i style="text-align: center; color: #e99002" class="fa fa-flag"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                        
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-3 col-xs-4">
-                            <p>{{ 'yourregion' | translate }}</p>
-                        </div>
-                        <div class="col-md-9 col-xs-8">
-
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" style="width: 35%">
-                                    <span class="sr-only">35% Complete (success)</span>
-                                </div>
-                                <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 30%">
-                                    <span class="sr-only">20% Complete (warning)</span>
-                                </div>
-                                <div class="progress-bar progress-bar-danger" style="width: 35%">
-                                    <span class="sr-only">10% Complete (danger)</span>
-                                </div>
-                            </div>
 
 
-                        </div>
-                    </div>
                 </div>
 
 
@@ -402,4 +336,3 @@
 
 
 
-	

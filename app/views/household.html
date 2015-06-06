@@ -3,15 +3,7 @@
 
 <h3 style="margin-top: 0px; margin-bottom: 0px;">{{ 'householdprofile' | translate }}</h3>
 <hr />
-
-
     <form name="houseHold" id="houseHold" class="form-horizontal" role="form">
-
-
-            
-
-         
-        
 
         <div class="row">
             <div class="col-md-12 col-xs-12">
@@ -27,7 +19,7 @@
             </div>
         </div>
 
-           <div class="row">
+        <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="form-group">
 
@@ -40,8 +32,7 @@
             </div>
         </div>
 
-
-           <div class="row">
+        <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="form-group">
 
@@ -53,8 +44,7 @@
             </div>
         </div>
 
-
-           <div class="row">
+        <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="form-group">
 
@@ -65,9 +55,8 @@
         </div>
             </div>
         </div>
-
         
-           <div class="row">
+        <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="form-group">
 
@@ -83,7 +72,7 @@
             </div>
         </div>
 
-           <div class="row">
+        <div class="row">
             <div class="col-md-12 col-xs-12">
 
                 <div class="form-group">
@@ -105,35 +94,10 @@ font-size: 12px;
 width: 100% !important;
 }
         </style>
-
-        
-
-        
-
-
-        
-
-        
-
-    
-
-        
-
-
-
-
-
-
-
-
-
-        
-
         <hr />
-
         <div class="row">
             <div class="col-md-12">
-                <a data-ng-disabled="houseHold.$invalid" ng-click="saveproperty()" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i>{{ 'save' | translate }}</a>
+                <a data-ng-disabled="houseHold.$invalid" data-ng-click="saveproperty()" class="btn btn-danger btn-sm pull-right"><i class="fa fa-check"></i>{{ 'save' | translate }}</a>
                 <input type="reset" style="display: none" id="resetbutton" value="" />
             </div>
         </div>
@@ -145,7 +109,7 @@ width: 100% !important;
         margin-bottom: 3px !important;
     }
 
-    .form-horizontal .control-label {
+    .form-horizontal.control-label {
         text-align: left;
         font-size: 12px;
     }

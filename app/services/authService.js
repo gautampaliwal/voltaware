@@ -67,7 +67,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                     success: function (response1, status)
 
                     {
-                     
                         
                         _authentication.sensorId = response1.id;
 
@@ -154,7 +153,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                         dataType: "json",
                         success: function (response2, status) {
 
-
                             myusername = response2.emailAddress;
                             mypassword = loginData.password;
                             if (loginData.remember == true) {
@@ -173,6 +171,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
                         },
                         error: function (err) {
+
+                         
+                      
 
 
                             return err;
@@ -197,13 +198,17 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                                       _authentication.sensorId = response3[0].id;
                                       
 
+                                      //alert("Sensor Get success");
+
+                                 
+
 
 
 
                                   },
                                   error: function (err) {
 
-                                  
+                                 
 
 
 
@@ -217,7 +222,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
                                 setTimeout(function () { localStorageService.set('authorizationData', { token: response.access_token, uid: _authentication.userId, sid: _authentication.sensorId, userName: loginData.userName, remember: _authentication.remember, refreshToken: response.refresh_token, useRefreshTokens: true, expireIn: response.expires_in, name: _authentication.name }); }, 1000);
 
-                         
+                             
                          
                             });
 
@@ -251,7 +256,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     // LogOut function
     var _logOut = function () {
 
-    
+     
 
         if (_authentication.remember == false)
         {

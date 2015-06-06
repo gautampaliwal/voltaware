@@ -5,29 +5,11 @@ var app = angular.module('AngularAuthApp', ['ngRoute', 'ui.bootstrap', 'LocalSto
 // Define all Routes
 app.config(function ($routeProvider) {
 
-    $routeProvider.when("/home", {
-        controller: "homeController",
-        templateUrl: "app/views/home.html"
-    });
+   
 
     $routeProvider.when("/login", {
         controller: "loginController",
         templateUrl: "app/views/login.html"
-    });
-
-    $routeProvider.when("/signup", {
-        controller: "signupController",
-        templateUrl: "app/views/signup.html"
-    });
-
-    $routeProvider.when("/graph", {
-        controller: "graphcontroller",
-        templateUrl: "app/views/graph.html"
-    });
-
-    $routeProvider.when("/home", {
-        controller: "indexController",
-        templateUrl: "app/views/home.html"
     });
 
     $routeProvider.when("/forgotpassword", {
@@ -35,30 +17,32 @@ app.config(function ($routeProvider) {
         templateUrl: "app/views/forgotpassword.html"
     });
 
-    $routeProvider.when("/changepassword", {
-        controller: "changepasswordcontroller",
-        templateUrl: "app/views/changepassword.html"
+    $routeProvider.when("/signup", {
+        controller: "signupController",
+        templateUrl: "app/views/signup.html"
     });
 
-    $routeProvider.when("/browserdetail", {
-        controller: "browserdetailcontroller",
-        templateUrl: "app/views/browserdetail.html"
+  
+
+    $routeProvider.when("/home", {
+        controller: "indexController",
+        templateUrl: "app/views/home.html"
     });
 
-    $routeProvider.when("/household", {
-        controller: "householdlcontroller",
-        templateUrl: "app/views/household.html"
-    });
 
+    $routeProvider.when("/graph", {
+        controller: "graphcontroller",
+        templateUrl: "app/views/graph.html"
+    });
 
     $routeProvider.when("/alert", {
         controller: "alertcontroller",
         templateUrl: "app/views/alert.html"
     });
 
-    $routeProvider.when("/comparison", {
-        controller: "comparisioncontroller",
-        templateUrl: "app/views/comparison.html"
+    $routeProvider.when("/changepassword", {
+        controller: "changepasswordcontroller",
+        templateUrl: "app/views/changepassword.html"
     });
 
     $routeProvider.when("/account", {
@@ -66,13 +50,21 @@ app.config(function ($routeProvider) {
         templateUrl: "app/views/account.html"
     });
 
+    $routeProvider.when("/household", {
+        controller: "householdlcontroller",
+        templateUrl: "app/views/household.html"
+    });
+
+   
+
     // Default Page load 
     $routeProvider.otherwise({ redirectTo: "/login" });
 
 });
 
 // Common URL of All API
-var serviceBase = 'http://54.154.64.51:8080/voltaware/';
+var serviceBase = 'http://restapi.voltaware.com:8080/voltaware/';
+var mainServicebase = 'http://restapi.voltaware.com:8080/voltaware/v1.0/'
 
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase,

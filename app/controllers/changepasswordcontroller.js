@@ -1,7 +1,7 @@
 ﻿
 'use strict';
 
-var ChangepasswordURL = "http://54.154.64.51:8080/voltaware/v1.0/users/"
+var ChangepasswordURL = mainServicebase + "users/"
 
 
 

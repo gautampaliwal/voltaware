@@ -15,17 +15,17 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     $scope.sid = authData.sid;
     $scope.rememberme = authData.remember;
 
-    $scope.furl = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/graphtoday';
+    $scope.furl = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/graphtoday';
 
-    $scope.surl = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/now'
-    $scope.todayurl = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/totaltoday'
-    $scope.dailyavg = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/daily_average'
-    $scope.expected = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/expected_today'
-    $scope.last24hours = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last24hour'
-    $scope.last7days = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last7days'
-    $scope.lastmonth = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/lastMonth'
-    $scope.last6month = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last6Months'
-    $scope.lastyear = 'http://54.154.64.51:8080/voltaware/v1.0/' + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/lastYears'
+    $scope.surl = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/now'
+    $scope.todayurl = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/totaltoday'
+    $scope.dailyavg = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/daily_average'
+    $scope.expected = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/expected_today'
+    $scope.last24hours = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last24hour'
+    $scope.last7days = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last7days'
+    $scope.lastmonth = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/lastMonth'
+    $scope.last6month = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/last6Months'
+    $scope.lastyear = mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sid + '/powerinfo/lastYears'
     $scope.isFirstTime = false;
 
 
@@ -427,7 +427,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/property',
+        url: mainServicebase +'user/' + $scope.uid + '/property',
         contentType: "application/json; charset=utf-8",
         headers: {
             'Authorization': 'Bearer ' + $scope.AuthToken
@@ -444,10 +444,13 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
             if (data.sensor != null) {
                 $scope.sensorid = data.sensor.id;
             }
+
+            debugger;
          
 
             $scope.propertytypename = data.propertyType.name;
             $scope.bedcounter = data.numberBedrooms;
+            $scope.countryname = data.address.country;
 
             if (data != null) {
 
@@ -456,7 +459,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/property/' + $scope.propertytypeid,
+                    url: mainServicebase + 'user/' + $scope.uid + '/property/' + $scope.propertytypeid,
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         'Authorization': 'Bearer ' + $scope.AuthToken
@@ -496,12 +499,20 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/user/' + $scope.uid + '/sensor/' + $scope.sensorid + '/comparison',
+            url: mainServicebase + 'user/' + $scope.uid + '/sensor/' + $scope.sensorid + '/comparison',
             contentType: "application/json; charset=utf-8",
             headers: {
                 'Authorization': 'Bearer ' + $scope.AuthToken
             },
             success: function (response) {
+
+
+
+                debugger;
+
+                $scope.firstleft = (response.percentage / 2) * 100;
+
+                $scope.secondleft = (response.percentageSimilarHouse / 2) * 100;
 
               
 
@@ -635,11 +646,6 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
 
 
     };
-
-
-   
-
-
 
 
     var dt = new Date();
@@ -1503,7 +1509,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
 
     $scope.tipdetails = function () {
         $.ajax({
-            url: 'http://54.154.64.51:8080/voltaware/v1.0/tip',
+            url: mainServicebase + 'tip',
             type: "GET",
             accept: "application/json",
             headers: {
