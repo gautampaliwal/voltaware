@@ -12,6 +12,11 @@
     {
         display:none;
     }
+
+    .row
+    {
+        margin-bottom:10px;
+    }
 </style>
 
 <h4>{{ 'alertconfiguration' | translate }}</h4>
@@ -28,7 +33,7 @@
     </div>
 
 </div>
-<br />
+
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
         <h5>{{ 'highusageday' | translate }}</h5>
@@ -41,7 +46,7 @@
     </div>
 </div>
 
-<br />
+
 
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-6">
@@ -80,7 +85,75 @@
          </select>
      </div>
 </div>
-<br />
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <h5>High Usage Day threshold</h5>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-4">
+        <select style="font-size:13px;" class="form-control" ng-model="alert.dayMax">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+            <option value="90">90</option>
+            <option value="100">100</option>
+            <option value="110">110</option>
+            <option value="120">120</option>
+            <option value="130">130</option>
+            <option value="140">140</option>
+            <option value="150">150</option>
+            <option value="160">160</option>
+            <option value="170">170</option>
+        </select>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <h5>Low Activity Alert</h5>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+        <bs-switch ng-model="alert.lowactivityalert"
+                   type="checkbox" id="lowact" />
+
+      
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <h5>Medium Activity Alert</h5>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+        <bs-switch ng-model="alert.mediumactivityalert"
+                   type="checkbox" id="medact" />
+
+      
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <h5>High Activity Alert</h5>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <bs-switch ng-model="alert.highactivityalert"
+                   type="checkbox" id="highact" />
+    </div>
+</div>
+
+
+
+
 <hr />
 <div class="row">
 
@@ -97,7 +170,6 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <a class="btn btn-success" data-ng-click="savealert()"><i class="fa fa-check"></i>&nbsp; {{ 'save' | translate }} {{ 'alerts' | translate }}</a>
-        <!--<a href="#/graph" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;{{ 'cancel' | translate }}</a>-->
     </div>
 </div>
 

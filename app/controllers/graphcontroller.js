@@ -1662,5 +1662,79 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
 
     //setInterval(function () { $scope.gettodaycounter(); }, 10000);
 
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: mainServicebase + 'user/' + $scope.uid + '/property',
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            'Authorization': 'Bearer ' + $scope.AuthToken
+        },
+        success: function (json) {
+
+        
+
+
+
+            var data = json.length == 0 ? null : json[json.length - 1];
+
+            if (data.sensor != null) {
+                $scope.sensorid = data.sensor.id;
+            }
+
+
+            $scope.propertytypename = data.propertyType.name;
+            $scope.bedcounter = data.numberBedrooms;
+
+            if (data != null) {
+
+                $scope.propertytypeid = data.id;
+                //    $scope.$apply();
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: mainServicebase + 'user/' + $scope.uid + '/property/' + $scope.propertytypeid,
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        'Authorization': 'Bearer ' + $scope.AuthToken
+                    },
+                    success: function (json) {
+
+                     
+
+                        debugger;
+                 
+                        $scope.standingcharges = json.tariff.listTariffPriceXML[0].standingCharge
+
+
+                        $scope.newstandingcharges = (json.tariff.listTariffPriceXML[0].standingCharge) / 100;
+
+
+                        var TD = parseFloat($scope.newstandingcharges);
+
+                        $scope.newstandingcharges = TD.toFixed(2);
+
+                        //    $scope.$apply();
+                    
+
+                    },
+                    error: function (xhr, status) {
+                    }
+                });
+            }
+
+
+
+
+
+
+        },
+        error: function (xhr, status) {
+
+
+
+        }
+    });
+
 }]);
 

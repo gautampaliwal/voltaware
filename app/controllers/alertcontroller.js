@@ -14,10 +14,10 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
     setInterval(function () { $scope.currentselectedlanguage = selectedlanguage }, 500);
     $scope.alert = {
         highusagehr: false,
+        lowactivityalert: false,
+        mediumactivityalert: false,
+        highactivityalert: false,
         highusageday: false,
-        largeconsumes: false,
-        computers: false,
-        light: false,
         emailAlert: $scope.email
      
     };
@@ -51,10 +51,18 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
                 if (data != null) {
                     $scope.alert.ID = data.id;
                     $scope.alert.hourMax = data.hourMax;
+                    $scope.alert.dayMax = data.dayMax;
                     $scope.alert.highusagehr = data.hourAlert;
                     $scope.alert.highusageday = data.dayAlert;
-                    $scope.alert.emailAlert = data.emailAlert;
-
+                    $scope.alert.email = data.emailAlert;
+                    $scope.alert.lowactivityalert = data.lowActivity;
+                    $scope.alert.mediumactivityalert = data.mediumActivity;
+                    $scope.alert.highactivityalert = data.highActivity;
+                    $('#hr').attr('checked', $scope.alert.highusagehr); // Checks it
+                    $('#day').attr('checked', $scope.alert.highusageday);
+                    $('#lowact').attr('checked', data.lowActivity);
+                    $('#medact').attr('checked', data.mediumActivity);
+                    $('#highact').attr('checked', data.highActivity);
                     $scope.$apply();
                 }
 
@@ -80,7 +88,7 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
             url: mainServicebase+'user/' + $scope.uid + '/alert/' + $scope.alert.ID,
             type: "PUT",
             accept: "application/json",
-            data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.emailAlert, "dayMax": 10.0, "hourMax": $scope.alert.hourMax }),
+            data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.email, "dayMax": $scope.alert.dayMax, "hourMax": $scope.alert.hourMax, "lowActivity": $scope.alert.lowactivityalert, "mediumActivity": $scope.alert.mediumactivityalert, "highActivity": $scope.alert.highactivityalert }),
             headers: {
                 'Authorization': 'Bearer ' + $scope.AuthToken
             },
