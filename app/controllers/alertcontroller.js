@@ -4,6 +4,8 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
     var authData = localStorageService.get('authorizationData');
     var userLang = navigator.language || navigator.userLanguage;
 
+   
+
 
     $scope.email = authData.userName;
     $scope.uid = authData.uid;
@@ -19,7 +21,7 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
         highactivityalert: false,
         highusageday: false,
         emailAlert: $scope.email
-     
+
     };
 
 
@@ -34,58 +36,58 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
     }
 
 
-        $.ajax({
-            url: mainServicebase+'user/' + $scope.uid + '/alert',
-            type: "GET",
-            accept: "application/json",
-            headers: {
-                'Authorization': 'Bearer ' + $scope.AuthToken
-            },
-        
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (response, status) {
-                debugger;
-                var data = response.length == 0 ? null : response[response.length - 1];
+    $.ajax({
+        url: mainServicebase + 'user/' + $scope.uid + '/alert',
+        type: "GET",
+        accept: "application/json",
+        headers: {
+            'Authorization': 'Bearer ' + $scope.AuthToken
+        },
 
-                if (data != null) {
-                    $scope.alert.ID = data.id;
-                    $scope.alert.hourMax = data.hourMax;
-                    $scope.alert.dayMax = data.dayMax;
-                    $scope.alert.highusagehr = data.hourAlert;
-                    $scope.alert.highusageday = data.dayAlert;
-                    $scope.alert.email = data.emailAlert;
-                    $scope.alert.lowactivityalert = data.lowActivity;
-                    $scope.alert.mediumactivityalert = data.mediumActivity;
-                    $scope.alert.highactivityalert = data.highActivity;
-                    $('#hr').attr('checked', $scope.alert.highusagehr); // Checks it
-                    $('#day').attr('checked', $scope.alert.highusageday);
-                    $('#lowact').attr('checked', data.lowActivity);
-                    $('#medact').attr('checked', data.mediumActivity);
-                    $('#highact').attr('checked', data.highActivity);
-                    $scope.$apply();
-                }
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (response, status) {
+            debugger;
+            var data = response.length == 0 ? null : response[response.length - 1];
 
-
-            },
-            error: function (err) {
-
-          
-
-               
-
-
+            if (data != null) {
+                $scope.alert.ID = data.id;
+                $scope.alert.hourMax = data.hourMax;
+                $scope.alert.dayMax = data.dayMax;
+                $scope.alert.highusagehr = data.hourAlert;
+                $scope.alert.highusageday = data.dayAlert;
+                $scope.alert.email = data.emailAlert;
+                $scope.alert.lowactivityalert = data.lowActivity;
+                $scope.alert.mediumactivityalert = data.mediumActivity;
+                $scope.alert.highactivityalert = data.highActivity;
+                $('#hr').attr('checked', $scope.alert.highusagehr); // Checks it
+                $('#day').attr('checked', $scope.alert.highusageday);
+                $('#lowact').attr('checked', data.lowActivity);
+                $('#medact').attr('checked', data.mediumActivity);
+                $('#highact').attr('checked', data.highActivity);
+                $scope.$apply();
             }
-        })
-  
 
 
-        $scope.savealert = function () {
+        },
+        error: function (err) {
 
-     
+
+
+
+
+
+        }
+    })
+
+
+
+    $scope.savealert = function () {
+
+
 
         $.ajax({
-            url: mainServicebase+'user/' + $scope.uid + '/alert/' + $scope.alert.ID,
+            url: mainServicebase + 'user/' + $scope.uid + '/alert/' + $scope.alert.ID,
             type: "PUT",
             accept: "application/json",
             data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.email, "dayMax": $scope.alert.dayMax, "hourMax": $scope.alert.hourMax, "lowActivity": $scope.alert.lowactivityalert, "mediumActivity": $scope.alert.mediumactivityalert, "highActivity": $scope.alert.highactivityalert }),
@@ -95,6 +97,19 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response, status) {
+
+
+                debugger;
+
+
+                $(".successmessage").show();
+                $(".errormessage").hide();
+                $scope.responsemessage = "Your changes have been saved";
+                $scope.$apply();
+                hidemessage();
+
+            
+
                 debugger;
                 if ($scope.currentselectedlanguage == "it") {
 
@@ -103,29 +118,41 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
                 }
                 else {
 
-            
+
 
                 }
 
             },
             error: function (err) {
 
-
-                log.error("Error::" + err.statusText);
-
             
+
+
+                //log.error("Error::" + err.statusText);
+
+           
+                $(".successmessage").hide();
+                $(".errormessage").show();
+
+                $scope.responsemessage = err.statusText;
+                $scope.$apply();
+                hidemessage();
+
+              
+
+              
 
 
             }
         })
 
-        }
+    }
 
 
-    
-    
 
-        
+
+
+
 
 
 }]);
