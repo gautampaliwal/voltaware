@@ -1,151 +1,340 @@
-﻿'use strict';
-app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', function ($scope, log, localStorageService) {
+'use strict';
+app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', function ($scope, log, localStorageService) {
+
+    $scope.householddetail = "Household Profile & Tariff Setup";
+
 
     var authData = localStorageService.get('authorizationData');
-    var userLang = navigator.language || navigator.userLanguage;
-
-   
-
-
-    $scope.email = authData.userName;
-    $scope.uid = authData.uid;
-    $scope.AuthToken = authData.token;
-
+    $scope.ElectricityProviderData = [];
+    $scope.TariffData = [];
     $scope.currentselectedlanguage = "en"
+    setInterval(function () {
 
-    setInterval(function () { $scope.currentselectedlanguage = selectedlanguage }, 500);
-    $scope.alert = {
-        highusagehr: false,
-        lowactivityalert: false,
-        mediumactivityalert: false,
-        highactivityalert: false,
-        highusageday: false,
-        emailAlert: $scope.email
+        $scope.currentselectedlanguage = selectedlanguage
+        if (selectedlanguage == "it") {
+            $scope.selectpropertytext = "выбрать Тип жилья";
+            $scope.electricityprovidertext = "выбрать Энергопровайдер"
+            $scope.providertext = "выбрать ваш поставщик"
+        }
+
+        else {
+            $scope.selectpropertytext = "Select property type";
+            $scope.electricityprovidertext = "Select electricity provider"
+            $scope.providertext = "Select your Tariff"
+        }
+    }, 100);
+
+
+    $scope.uid = authData.uid;
+    $scope.token = authData.token;
+
+    $scope.iseditmode = false;
+
+    $scope.propertyID = "";
+
+    $scope.household = {
+        propertytype: "",
+        numberofadults: "",
+        numberofchildrens: "",
+        numberofbedrooms: "",
+        electricityprovider: "",
+        tarrif: ""
 
     };
+    $scope.postcode = "";
+    $scope.areacode = "";
+
+    $scope.numberofadults = [{ Id: 0, Value: "0" }, { Id: 1, Value: "1" }, { Id: 2, Value: "2" }, { Id: 3, Value: "3" }, { Id: 4, Value: "4" }, { Id: 5, Value: "5" }, { Id: 6, Value: "6" }, { Id: 7, Value: "7" }, { Id: 8, Value: "8" }, { Id: 9, Value: "9" }, { Id: 10, Value: "10" }];
+    $scope.numberofchildrens = [{ Id: 0, Value: "0" }, { Id: 1, Value: "1" }, { Id: 2, Value: "2" }, { Id: 3, Value: "3" }, { Id: 4, Value: "4" }, { Id: 5, Value: "5" }, { Id: 6, Value: "6" }, { Id: 7, Value: "7" }, { Id: 8, Value: "8" }, { Id: 9, Value: "9" }, { Id: 10, Value: "10" }];
+    $scope.numberofbedrooms = [{ Id: 0, Value: "0" }, { Id: 1, Value: "1" }, { Id: 2, Value: "2" }, { Id: 3, Value: "3" }, { Id: 4, Value: "4" }, { Id: 5, Value: "5" }, { Id: 6, Value: "6" }, { Id: 7, Value: "7" }, { Id: 8, Value: "8" }, { Id: 9, Value: "9" }, { Id: 10, Value: "10" }];
+
+    $scope.getpropertyvalue = function () {
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: mainServicebase +'user/' + $scope.uid + '/property',
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                'Authorization': 'Bearer ' + $scope.token
+            },
+            success: function (json) {
 
 
-    if (userLang == "es" || "ru" || "ru-ru") {
+                var data = json.length == 0 ? null : json[json.length - 1];
 
-        $("#CurrentDate").html("<b>" + moment(new Date()).format("DD MMM YYYY,h:mm:ss a") + "</b>");
+
+                if (data != null) {
+
+                    $scope.propertyID = data.id;
+                    $scope.iseditmode = true;
+
+                    $scope.household.propertytype = data.propertyType.id;
+                    $scope.household.numberofadults = data.numberAdults;
+                    $scope.household.numberofchildrens = data.numberChildren;
+                    $scope.household.numberofbedrooms = data.numberBedrooms;
+                    $scope.household.tarrif = data.tariff.displayName;
+                    $scope.household.electricityprovider = data.tariff.electricityProviderXML.name;
+
+
+                    $scope.electricityproviderlistvalue = $scope.GetElectricityValue($scope.household.electricityprovider);
+                    $scope.Tariffvalue = $scope.GetTariffValue($scope.household.tarrif);
+
+                    $('#Propertytypelist option[value="' + $scope.household.propertytype + '"]').prop('selected', true);
+                    $('#numberofadult option[value="' + $scope.household.numberofadults + '"]').prop('selected', true);
+                    $('#numberofchildren option[value="' + $scope.household.numberofchildrens + '"]').prop('selected', true);
+                    $('#numberofbedroom option[value="' + $scope.household.numberofbedrooms + '"]').prop('selected', true);
+
+                    $('#electricityproviderlist option[value="' + $scope.electricityproviderlistvalue + '"]').prop('selected', true);
+                    $('#tarriflist option[text="' + $scope.Tariffvalue + '"]').prop('selected', true);
+
+
+
+
+                    $scope.$apply();
+
+                }
+
+
+
+            },
+            error: function (xhr, status) {
+                log.error(xhr)
+            }
+        });
 
     }
 
-    else {
-        $("#CurrentDate").html("<b>" + moment(new Date()).format("MMM DD YYYY,h:mm:ss a") + "</b>");
+
+    $scope.getpostcode = function () {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: mainServicebase +'user/' + $scope.uid + '/property',
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                'Authorization': 'Bearer ' + $scope.token
+            },
+            success: function (json) {
+
+
+
+                var data = json.length == 0 ? null : json[json.length - 1];
+
+
+                if (data.address != null) {
+
+
+                    $scope.postcode = data.address.postcode;
+
+                    $scope.$apply();
+
+                    $scope.getareacode();
+                }
+
+
+            },
+            error: function (xhr, status) {
+
+
+
+                log.error(xhr)
+            }
+        });
     }
 
+    $scope.getareacode = function () {
 
-    $.ajax({
-        url: mainServicebase + 'user/' + $scope.uid + '/alert',
-        type: "GET",
-        accept: "application/json",
-        headers: {
-            'Authorization': 'Bearer ' + $scope.AuthToken
-        },
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: mainServicebase+'postcode/' + $scope.postcode,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
 
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (response, status) {
-            debugger;
-            var data = response.length == 0 ? null : response[response.length - 1];
 
-            if (data != null) {
-                $scope.alert.ID = data.id;
-                $scope.alert.hourMax = data.hourMax;
-                $scope.alert.dayMax = data.dayMax;
-                $scope.alert.highusagehr = data.hourAlert;
-                $scope.alert.highusageday = data.dayAlert;
-                $scope.alert.email = data.emailAlert;
-                $scope.alert.lowactivityalert = data.lowActivity;
-                $scope.alert.mediumactivityalert = data.mediumActivity;
-                $scope.alert.highactivityalert = data.highActivity;
-                $('#hr').attr('checked', $scope.alert.highusagehr); // Checks it
-                $('#day').attr('checked', $scope.alert.highusageday);
-                $('#lowact').attr('checked', data.lowActivity);
-                $('#medact').attr('checked', data.mediumActivity);
-                $('#highact').attr('checked', data.highActivity);
+                $scope.areacode = data.areaCode;
                 $scope.$apply();
+
+
+
+                $scope.getelectricityprovider();
+
+
+            },
+            error: function (xhr, status) {
+
+                $(".successmessage").hide();
+                $(".errormessage").show();
+                $scope.responsemessage = xhr.statusText;
+                $scope.$apply();
+                hidemessage();
+
+
+            }
+        });
+    }
+
+
+    $scope.GetElectricityValue = function (text) {
+        for (var i = 0; i < $scope.ElectricityProviderData.length; i++) {
+            if ($scope.ElectricityProviderData[i].name === text) {
+                console.log($scope.ElectricityProviderData[i].id);
+
+                return $scope.ElectricityProviderData[i].id;
+
             }
 
+        }
+    }
 
-        },
-        error: function (err) {
+    $scope.GetTariffValue = function (text) {
+        for (var i = 0; i < $scope.TariffData.length; i++) {
+            if ($scope.TariffData[i].name === text) {
+                console.log($scope.TariffData[i].id);
+                return $scope.TariffData[i].id;
 
-
-
-
-
+            }
 
         }
+    }
+
+
+    $scope.getpropertytype = function () {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: mainServicebase + 'property_type',
+            contentType: "application/json; charset=utf-8",
+            success: function (json) {
+
+
+                $('#Propertytypelist').empty();
+                var i = 0;
+                $('#Propertytypelist').append($('<option>').text($scope.selectpropertytext).attr('value', ""));
+                for (i = 0; i < json.length; i++) {
+                    $('#Propertytypelist').append($('<option>').text(json[i].name).attr('value', json[i].id));
+
+                }
+
+            },
+            error: function (xhr, status) {
+
+                log.error(xhr)
+
+
+            }
+        });
+    }
+
+
+    $scope.getelectricityprovider = function () {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: mainServicebase + 'electricityprovider',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //$scope.ElectricityProviderData = data;
+
+                $('#electricityproviderlist').empty();
+                var i = 0;
+                $('#electricityproviderlist').append($('<option>').text($scope.electricityprovidertext).attr('value', ""));
+                for (i = 0; i < data.length; i++) {
+                    $('#electricityproviderlist').append($('<option>').text(data[i].name).attr('value', data[i].id));
+                    $scope.ElectricityProviderData.push(data[i]);
+                }
+
+
+            },
+            error: function (xhr, status) {
+
+
+
+
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+    $('#electricityproviderlist').on('change', function () {
+        var electricityid = $('#electricityproviderlist option:selected').val();
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+
+            url: mainServicebase+'electricityprovider/' + electricityid + '/postcode/' + $scope.postcode,
+
+
+
+            //  url: 'http://54.154.64.51:8080/voltaware/v1.0/electricityprovider/' + electricityid,
+            contentType: "application/json; charset=utf-8",
+            success: function (tarrif) {
+
+                $('#tarriflist').empty();
+                var i = 0;
+                $('#tarriflist').append($('<option>').text($scope.providertext).attr('value', ""));
+                for (i = 0; i < tarrif.listTariff.length; i++) {
+                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].displayName).attr('value', tarrif.listTariff[i].id));
+                }
+            },
+            error: function (xhr, status)
+            {
+
+            }
+        });
+
     })
 
 
 
-    $scope.savealert = function () {
+    $scope.getselectedtariff = function () {
 
 
+        var electricityid = $scope.GetElectricityValue($scope.household.electricityprovider);
 
         $.ajax({
-            url: mainServicebase + 'user/' + $scope.uid + '/alert/' + $scope.alert.ID,
-            type: "PUT",
-            accept: "application/json",
-            data: JSON.stringify({ "hourAlert": $scope.alert.highusagehr, "dayAlert": $scope.alert.highusageday, "emailAlert": $scope.alert.email, "dayMax": $scope.alert.dayMax, "hourMax": $scope.alert.hourMax, "lowActivity": $scope.alert.lowactivityalert, "mediumActivity": $scope.alert.mediumactivityalert, "highActivity": $scope.alert.highactivityalert }),
-            headers: {
-                'Authorization': 'Bearer ' + $scope.AuthToken
-            },
+            type: "GET",
             dataType: "json",
+
+            url: mainServicebase+'electricityprovider/' + electricityid + '/postcode/' + $scope.postcode,
             contentType: "application/json; charset=utf-8",
-            success: function (response, status) {
+            success: function (tarrif) {
+                $('#tarriflist').empty();
+                var i = 0;
+                for (i = 0; i < tarrif.listTariff.length; i++) {
+                    $('#tarriflist').append($('<option>').text(tarrif.listTariff[i].displayName).attr('value', tarrif.listTariff[i].id));
+                    //  $scope.TariffData.push(data[i]);
+                }
+
+                //   $('#tarriflist option[value="' + $scope.household.tarrif + '"]').prop('selected', true);
+                //    $("#tarriflist option:contains(" + $scope.household.tarrif + ")").attr('selected', 'selected');
 
 
-                debugger;
+                var text1 = $scope.household.tarrif;
+                $("#tarriflist option").filter(function () {
+                    //may want to use $.trim in here
+                    return $(this).text() == text1;
+                }).prop('selected', true);
 
-
-                $(".successmessage").show();
-                $(".errormessage").hide();
-                $scope.responsemessage = "Your changes have been saved";
                 $scope.$apply();
-                hidemessage();
 
-            
-
-                debugger;
-                if ($scope.currentselectedlanguage == "it") {
-
-                    log.info("Предупреждение успешно добавлен");
-
-                }
-                else {
-
-
-
-                }
 
             },
-            error: function (err) {
-
-            
+            error: function (xhr, status) {
 
 
-                //log.error("Error::" + err.statusText);
 
-           
-                $(".successmessage").hide();
-                $(".errormessage").show();
-
-                $scope.responsemessage = err.statusText;
-                $scope.$apply();
-                hidemessage();
-
-              
-
-              
-
-
+                $(".postcodeerror").show()
             }
-        })
-
+        });
     }
 
 
@@ -153,6 +342,142 @@ app.controller('alertcontroller', ['$scope', 'log', 'localStorageService', funct
 
 
 
+
+
+
+    $scope.saveproperty = function () {
+
+
+
+
+        var URL = "";
+        var MethodTYPE = ""
+
+        if ($scope.iseditmode == true) {
+
+            URL = mainServicebase+'user/' + $scope.uid + '/property/' + $scope.propertyID;
+            MethodTYPE = "PUT";
+
+        }
+
+        if ($scope.iseditmode == false) {
+
+            URL = mainServicebase+'user/' + $scope.uid + '/property';
+            MethodTYPE = "POST";
+
+        }
+
+
+
+        if ($("#Propertytypelist").val() != "") {
+            $.ajax({
+                url: URL,
+                type: MethodTYPE,
+                accept: "application/json",
+                data: JSON.stringify({ "numberBedrooms": $scope.household.numberofbedrooms, "numberAdults": $scope.household.numberofadults, "numberChildren": $scope.household.numberofchildrens, "propertyType": { "id": $("#Propertytypelist").val(), "name": $("#Propertytypelist option:selected").text() } }),
+                headers: {
+                    'Authorization': 'Bearer ' + $scope.token
+                },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response, status) {
+
+                    $(".successmessage").show();
+                    $(".errormessage").hide();
+                    $scope.responsemessage = "Your changes have been saved";
+                    $scope.$apply();
+                    hidemessage();
+
+
+
+                    if ($scope.currentselectedlanguage == "it") {
+
+                      //  log.info("бытовые Профиль успешно обновлены");
+
+                    }
+                    else {
+
+                  
+
+                    }
+
+
+
+                    if ($("#electricityproviderlist").val() != "" && $("#tarriflist").val() != "") {
+                        $.ajax({
+                            url: mainServicebase+'user/' + $scope.uid + '/property/' + response.id + '/tariff/' + $("#tarriflist").val(),
+                            type: "PUT",
+                            accept: "application/json",
+
+                            headers: {
+                                'Authorization': 'Bearer ' + $scope.token
+                            },
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response, status) {
+
+                            },
+                            error: function (err)
+                            {
+                            log.error("Error::" + err.statusText);
+                             }
+                        });
+                    }
+
+                    if ($("#electricityproviderlist").val() == "" || $("#tarriflist").val() == "") {
+                       // log.info("Electricity provider is not updating");
+                    }
+
+                    //  $('#houseHold').find("input[type=text], select").val("");
+
+                },
+                error: function (err)
+                {
+
+                    $(".successmessage").hide();
+                    $(".errormessage").show();
+                    $scope.responsemessage = err;
+                    $scope.$apply();
+                    hidemessage();
+
+               //  log.error("Error::" + err);
+
+                }
+            })
+        }
+    }
+
+
+    setTimeout(function () {
+
+        $('#Propertytypelist option[value="' + $scope.household.propertytype + '"]').prop('selected', true);
+        $scope.electricityproviderlistvalue = $scope.GetElectricityValue($scope.household.electricityprovider);
+        $('#electricityproviderlist option[value="' + $scope.electricityproviderlistvalue + '"]').prop('selected', true);
+        $scope.Tariffvalue = $scope.GetTariffValue($scope.household.tarrif);
+        $('#tarriflist option[value="' + $scope.Tariffvalue + '"]').prop('selected', true);
+        $scope.getselectedtariff();
+        $scope.$apply();
+
+    }, 4000);
+
+    $(".languagechanger").click(function () {
+        $scope.getpropertyvalue()
+        $scope.getpropertytype()
+        $scope.getelectricityprovider()
+
+        setTimeout(function () {
+            $('#Propertytypelist option[value="' + $scope.household.propertytype + '"]').prop('selected', true);
+            $scope.electricityproviderlistvalue = $scope.GetElectricityValue($scope.household.electricityprovider);
+            $('#electricityproviderlist option[value="' + $scope.electricityproviderlistvalue + '"]').prop('selected', true);
+            $scope.Tariffvalue = $scope.GetTariffValue($scope.household.tarrif);
+            $('#tarriflist option[value="' + $scope.Tariffvalue + '"]').prop('selected', true);
+            $scope.$apply();
+
+        }, 3000);
+    });
+    $scope.getpostcode();
+    $scope.getpropertyvalue();
+    $scope.getpropertytype();
 
 
 }]);
