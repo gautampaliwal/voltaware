@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', function ($scope, log, localStorageService) {
 
     $scope.householddetail = "Household Profile & Tariff Setup";
@@ -163,6 +163,12 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
 
             },
             error: function (xhr, status) {
+
+                $(".successmessage").hide();
+                $(".errormessage").show();
+                $scope.responsemessage = xhr.statusText;
+                $scope.$apply();
+                hidemessage();
 
 
             }
