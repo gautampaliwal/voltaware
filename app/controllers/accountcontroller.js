@@ -9,7 +9,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
     $scope.uid = authData.uid;
     $scope.AuthToken = authData.token;
 
-    console.log("Current Token at account controller" + $scope.AuthToken);
+  
     $scope.editmode = true;
 
 
@@ -65,7 +65,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
         error: function (err) {
 
 
-            log.error("Error::" + err.statusText);
+         //   log.error("Error::" + err.statusText);
 
 
 
@@ -152,7 +152,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
 
 
-            log.error(xhr)
+        //    log.error(xhr)
 
 
         }
@@ -220,7 +220,7 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
                 }
 
                 else {
-                    log.error(xhr.responseText)
+                  //  log.error(xhr.responseText)
                 }
 
 

@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', function ($scope, log, localStorageService) {
 
     $scope.householddetail = "Household Profile & Tariff Setup";
@@ -99,7 +99,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
 
             },
             error: function (xhr, status) {
-                log.error(xhr)
+               // log.error(xhr)
             }
         });
 
@@ -138,7 +138,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
 
 
 
-                log.error(xhr)
+             //   log.error(xhr)
             }
         });
     }
@@ -220,7 +220,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
             },
             error: function (xhr, status) {
 
-                log.error(xhr)
+               // log.error(xhr)
 
 
             }
@@ -419,7 +419,7 @@ app.controller('householdlcontroller', ['$scope', 'log', 'localStorageService', 
                             },
                             error: function (err)
                             {
-                            log.error("Error::" + err.statusText);
+                          //  log.error("Error::" + err.statusText);
                              }
                         });
                     }
