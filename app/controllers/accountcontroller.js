@@ -169,12 +169,11 @@ app.controller('accountcontroller', ['$scope', 'log', 'localStorageService', fun
 
     $scope.updateprofile = function () {
 
-
         $.ajax({
             url: mainServicebase+'users/' + $scope.uid,
             type: "PUT",
             accept: "application/json",
-            data: JSON.stringify({ "firstName": $scope.account.firstname, "lastName": $scope.account.lastname, "emailAddress": $scope.account.email, "title": $("#titlelist option:selected").text() }),
+            data: JSON.stringify({ "firstName": $scope.account.firstname, "lastName": $scope.account.lastname, "emailAddress": $scope.account.email, "title": $("#titlelist option:selected").val() }),
             headers: {
                 'Authorization': 'Bearer ' + $scope.AuthToken
             },
