@@ -425,7 +425,11 @@ background-color: #336700;
                     <span class="sr-only">Toggle navigation</span>
                     <span><i style="color:#fff" class="glyphicon glyphicon-user"></i>&nbsp;{{ 'Hello' | translate }} &nbsp;<span style="color:#fff" data-ng-bind="authentication.name"></span>&nbsp;<i style="color:#fff" class="fa fa-th-list"></i></span>
                 </button>
-                <a style="color: #fff !important" class="navbar-brand">Volt@</a>
+                <a style="color: #fff !important" class="navbar-brand">
+
+                    <img src="content/img/logo.png" alt="Volta Ware" style="height:30px;" />
+                </a>
+                </a>
 
                 
                     
@@ -502,7 +506,7 @@ background-color: #336700;
                     </span>
                 </div>-->
 
- <script src="scripts/cordova.js"></script>
+ <!--<script src="scripts/cordova.js"></script>-->
 
     <!-- 3rd party libraries -->
     <script src="scripts/jquery-1.11.0.min.js"></script>
@@ -537,9 +541,6 @@ background-color: #336700;
             "hideMethod": "fadeOut"
         };
     </script>
-
-
-
 
 
 
@@ -589,7 +590,7 @@ background-color: #336700;
     <!-- Load controllers -->
 
     <script src="app/controllers/indexController.js?v=2"></script>
-    <script src="app/controllers/angularTranslationService.js"></script>
+ 
     <script src="app/controllers/loginController.js?v=2"></script>
     <script src="app/controllers/signupController.js?v=2"></script>
     <script src="app/controllers/graphcontroller.js"></script>

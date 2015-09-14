@@ -428,7 +428,7 @@ app.config(function ($translateProvider) {
         Mrs: 'señora',
         Prof: 'profe',
         Miss: 'Perder',
-        DR: 'врач',
+        DR: 'Dr.',
         Tariffinfo: 'Información arancelaria',
         beddetachedhousein: 'cama casa unifamiliar en',
         bed: 'cama',
