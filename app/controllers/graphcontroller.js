@@ -1812,7 +1812,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
             $scope.FirstTimeClick(1);
 
             $scope.utilizationinfo();
-            $scope.propertytypelabel($scope.propertytypename)
+            $scope.propertytypelabel($scope.propertytypenamelabel)
 
             // FirstTimeClick(1)
         }, 1500);
@@ -1841,7 +1841,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
             if (data.sensor != null) {
                 $scope.sensorid = data.sensor.id;
             }
-
+            $scope.propertytypenamelabel = data.propertyType.name;
 
             $scope.propertytypename = data.propertyType.name;
             $scope.bedcounter = data.numberBedrooms;

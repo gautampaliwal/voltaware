@@ -140,6 +140,7 @@ app.config(function ($translateProvider) {
         beddetachedhousein: 'bed detached house in',
         bed: 'bed',
         intext: 'in',
+        annotation: 'annotation'
     })
 
 
@@ -286,6 +287,7 @@ app.config(function ($translateProvider) {
         beddetachedhousein: 'комнатный отдельный дом в',
         bed: 'кровать',
         intext: 'в',
+        annotation: 'аннотация'
 
 
     })
@@ -433,6 +435,7 @@ app.config(function ($translateProvider) {
         beddetachedhousein: 'cama casa unifamiliar en',
         bed: 'cama',
         intext: 'en',
+        annotation: 'anotación'
     });
     $translateProvider.preferredLanguage('en');
 });
