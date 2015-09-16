@@ -388,7 +388,7 @@ app.config(function ($translateProvider) {
         emailaddress: 'Dirección De Correo Electrónico',
         confirmemailaddress: 'Confirmar El Correo',
         currentusage: 'Uso actual',
-        howdoyoucompare: '¿Cómo se puede comparar',
+        howdoyoucompare: '¿Cómo se compara',
         youbased: 'usted (basado en su historial)',
         other2beds: 'Otros 2 cama pisos naborwides',
         yourregion: 'Su región como promedio',

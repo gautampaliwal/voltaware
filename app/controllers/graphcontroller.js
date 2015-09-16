@@ -464,7 +464,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                     $scope.propertytypename = "semi detached house";
                 }
                 break;
-            case "Commercial":
+            case "commercial":
 
                 if (selectedlanguage == "it") {
                     $scope.propertytypename = "Нежилой";
@@ -474,7 +474,7 @@ app.controller('graphcontroller', ['$scope', '$http', 'authService', 'localStora
                     $scope.propertytypename = "Comerciales";
                 }
                 else {
-                    $scope.propertytypename = "Commercial";
+                    $scope.propertytypename = "commercial";
                 }
 
                 break;
